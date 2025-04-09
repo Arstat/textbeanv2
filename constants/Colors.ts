@@ -1,26 +1,35 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+const Colors = {
+  // Primary colors
+  background: '#121218',
+  backgroundSecondary: '#1E1E2A',
+  backgroundTertiary: '#2A2A3A',
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+  // Text colors
+  text: '#FFFFFF',
+  textSecondary: '#A0A0B2',
 
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
+  // Accent colors
+  accent: '#7C4DFF',
+  accentSecondary: '#5E35B1',
+
+  // Platform colors
+  whatsapp: '#25D366',
+  telegram: '#0088CC',
+  messenger: '#00B2FF',
+  instagram: '#E1306C',
+  signal: '#3A76F0',
+  slack: '#4A154B',
+
+  // Status colors
+  success: '#4CAF50',
+  warning: '#FF9800',
+  error: '#F44336',
+  info: '#2196F3',
+
+  // UI elements
+  card: 'rgba(30, 30, 42, 0.8)',
+  divider: 'rgba(255, 255, 255, 0.1)',
+  overlay: 'rgba(255, 255, 255, 0.5)',
 };
+
+export default Colors;

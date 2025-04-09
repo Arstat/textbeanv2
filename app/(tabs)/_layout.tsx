@@ -1,45 +1,82 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { BlurView } from 'expo-blur';
+import { Chrome as Home, Bell, Star, Brain } from 'lucide-react-native';
 import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import Colors from '@/constants/Colors';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: Colors.accent,
+        tabBarInactiveTintColor: Colors.textSecondary,
+        tabBarShowLabel: true,
+        tabBarLabelStyle: styles.tabBarLabel,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarBackground: () =>
+          Platform.OS !== 'web' ? (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={StyleSheet.absoluteFill}
+            />
+          ) : (
+            <View
+              style={[StyleSheet.absoluteFill, styles.webTabBarBackground]}
+            />
+          ),
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="notifications"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Notifications',
+          tabBarIcon: ({ color, size }) => <Bell size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: 'Favorites',
+          tabBarIcon: ({ color, size }) => <Star size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="ai-insights"
+        options={{
+          title: 'AI Insights',
+          tabBarIcon: ({ color, size }) => <Brain size={size} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    position: 'absolute',
+    borderTopWidth: 0,
+    elevation: 0,
+    height: 60,
+    backgroundColor: 'transparent',
+    borderTopColor: 'transparent',
+    paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+  },
+  webTabBarBackground: {
+    backgroundColor: Colors.backgroundSecondary,
+    opacity: 0.7,
+  },
+  tabBarLabel: {
+    fontFamily: 'Inter-Medium',
+    fontSize: 12,
+  },
+});
